@@ -77,6 +77,35 @@ cat <<EOF >/etc/v2ray/config.json
         }
     ]
 }
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "inbounds": [
+        {
+            "listen": "0.0.0.0",
+            "port": 80,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "c9905218-7c6c-49a4-83df-513cc1dbf324",
+                        "alterId": 0
+                    }
+                ],
+                "disableInsecureEncryption": true
+            },
+            "streamSettings": {
+                "network": "ws"
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom"
+        }
+    ]
+}
 EOF
 
 # Clean
