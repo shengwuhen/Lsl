@@ -1,4 +1,4 @@
-const $ = new Env('¿ìÊÖ¼«ËÙ°æµÍ±£');
+const $ = new Env('å¿«æ‰‹æé€Ÿç‰ˆä½ä¿');
 let res,
   ksjsbCookie = process.env.ksjsbCookie || '',
   Users = [],
@@ -31,7 +31,7 @@ class ksUser {
     this.wechat = '';
     this.needSms = false;
   }
-  //»ñÈ¡ÓÃ»§ĞÅÏ¢
+  //è·å–ç”¨æˆ·ä¿¡æ¯
   async getUserInfo() {
     let url =
       'https://nebula.kuaishou.com/rest/n/nebula/activity/earn/overview/basicInfo';
@@ -48,17 +48,17 @@ class ksUser {
       this.coinBalance = res.data.totalCoin;
       this.allCash = res.data.allCash;
       console.log(
-        `??${this.name}=>ÕË»§Óà¶î${this.cashBalance}Ôª£¬${
+        `??${this.name}=>è´¦æˆ·ä½™é¢${this.cashBalance}å…ƒï¼Œ${
           this.coinBalance
-        }½ğ±Ò£¬Î´ÉóºËÓà¶î${Math.floor(
+        }é‡‘å¸ï¼Œæœªå®¡æ ¸ä½™é¢${Math.floor(
           parseFloat(this.allCash) - parseFloat(this.cashBalance)
-        )}Ôª`
+        )}å…ƒ`
       );
     } else {
-      console.log(`??${this.name}=>²éÑ¯ÕË»§ĞÅÏ¢Ê§°Ü£º${res.error_msg}`);
+      console.log(`??${this.name}=>æŸ¥è¯¢è´¦æˆ·ä¿¡æ¯å¤±è´¥ï¼š${res.error_msg}`);
     }
   }
-  //·ÖÏí»ñµÃ3000½ğ±Ò
+  //åˆ†äº«è·å¾—3000é‡‘å¸
   async setShare() {
     let url =
       'https://nebula.kuaishou.com/rest/n/nebula/account/withdraw/setShare';
@@ -69,14 +69,14 @@ class ksUser {
       return;
     }
     if (res.result == 1) {
-      console.log(`??${this.name}=>×¼±¸·ÖÏíµÃ½ğ±Ò`);
+      console.log(`??${this.name}=>å‡†å¤‡åˆ†äº«å¾—é‡‘å¸`);
       await $.wait(200);
       await this.taskReward(122);
     } else {
-      console.log(`??${this.name}=>·ÖÏíÊ§°Ü£º${res.error_msg}`);
+      console.log(`??${this.name}=>åˆ†äº«å¤±è´¥ï¼š${res.error_msg}`);
     }
   }
-//×öÈÎÎñ
+//åšä»»åŠ¡
   async taskReward(taskId) {
     let url = `https://nebula.kuaishou.com/rest/n/nebula/daily/report?taskId=${taskId}`;
     let body = '';
@@ -87,15 +87,15 @@ class ksUser {
     }
     if (res.result == 1) {
       console.log(
-        `??${this.name}=>Íê³ÉÈÎÎñ[${taskId}]³É¹¦£¬»ñµÃ${res.data.amount}½ğ±Ò`
+        `??${this.name}=>å®Œæˆä»»åŠ¡[${taskId}]æˆåŠŸï¼Œè·å¾—${res.data.amount}é‡‘å¸`
       );
     } else {
       console.log(
-        `??${this.name}=>Íê³ÉÈÎÎñ[${taskId}]Ê§°Ü£º${res.error_msg}`
+        `??${this.name}=>å®Œæˆä»»åŠ¡[${taskId}]å¤±è´¥ï¼š${res.error_msg}`
       );
     }
   }
-//Ç©µ½ÏêÇé
+//ç­¾åˆ°è¯¦æƒ…
   async getSignInfo() {
     let url = 'https://nebula.kuaishou.com/rest/n/nebula/sign/queryPopup';
     let body = '';
@@ -106,7 +106,7 @@ class ksUser {
     }
     if (res.result == 1) {
       let todaySigned = res.data.nebulaSignInPopup.todaySigned;
-      console.log(`??${this.name}=>½ñÌì${todaySigned ? 'ÒÑ' : 'Î´'}Ç©µ½`);
+      console.log(`??${this.name}=>ä»Šå¤©${todaySigned ? 'å·²' : 'æœª'}ç­¾åˆ°`);
       if (!todaySigned) {
         await $.wait(200);
         await this.doSign();
@@ -114,12 +114,12 @@ class ksUser {
         await this.setShare();
       }
     } else {
-      console.log(`??${this.name}=>²éÑ¯Ç©µ½ĞÅÏ¢Ê§°Ü£º${res.error_msg}`);
+      console.log(`??${this.name}=>æŸ¥è¯¢ç­¾åˆ°ä¿¡æ¯å¤±è´¥ï¼š${res.error_msg}`);
     }
   }
   
 
-  //Ç©µ½
+  //ç­¾åˆ°
   async doSign() {
     let url =
       'https://nebula.kuaishou.com/rest/n/nebula/sign/sign?source=activity';
@@ -130,10 +130,10 @@ class ksUser {
       return;
     }
     if (res.result == 1) {
-      console.log(`${this.name}=>Ç©µ½³É¹¦£º${res.data.toast}`);
+      console.log(`${this.name}=>ç­¾åˆ°æˆåŠŸï¼š${res.data.toast}`);
       await $.wait(200);
     } else {
-      console.log(`??${this.name}=>Ç©µ½Ê§°Ü£º${res.error_msg}`);
+      console.log(`??${this.name}=>ç­¾åˆ°å¤±è´¥ï¼š${res.error_msg}`);
     }
   }
 
@@ -160,22 +160,22 @@ class ksUser {
       console.log(
         '??' +
           this.name +
-          '=>ÕË»§Óà¶î' +
+          '=>è´¦æˆ·ä½™é¢' +
           this.cashBalance +
-          'Ôª£¬' +
+          'å…ƒï¼Œ' +
           this.coinBalance +
-          '½ğ±Ò'
+          'é‡‘å¸'
       );
 
       _0x54aac5 == 2 && (await $.wait(200), await this.changeExchangeType(0));
     } else {
       console.log(
-        '??' + this.name + '=>²éÑ¯ÕË»§ĞÅÏ¢Ê§°Ü£º' + _0xa69994.error_msg
+        '??' + this.name + '=>æŸ¥è¯¢è´¦æˆ·ä¿¡æ¯å¤±è´¥ï¼š' + _0xa69994.error_msg
       );
     }
   }
   
-/*   //¿ªÏä×Ó,1½ğ±ÒÀÁµÃ¸ã 
+/*   //å¼€ç®±å­,1é‡‘å¸æ‡’å¾—æ 
   async openBox(_0x412555) {
     let _0x513362 =
         'https://nebula.kuaishou.com/rest/n/nebula/box/explore?isOpen=' +
@@ -198,28 +198,28 @@ class ksUser {
           ? (console.log(
               '??' +
                 this.name +
-                '=>¿ª±¦Ïä»ñµÃ' +
+                '=>å¼€å®ç®±è·å¾—' +
                 _0x15220b.data.commonAwardPopup.awardAmount +
-                '½ğ±Ò'
+                'é‡‘å¸'
             ),
             await $.wait(200),
             await this.ksAdParam(AdName.box))
-          : console.log('??' + this.name + '=>¿ª±¦ÏäÃ»ÓĞ»ñµÃ½ğ±Ò')
+          : console.log('??' + this.name + '=>å¼€å®ç®±æ²¡æœ‰è·å¾—é‡‘å¸')
         : _0x15220b.data.openTime > -1
         ? (console.log(
             '??' +
               this.name +
-              '=>¿ª±¦ÏäÀäÈ´Ê±¼ä»¹ÓĞ' +
+              '=>å¼€å®ç®±å†·å´æ—¶é—´è¿˜æœ‰' +
               Math.floor(_0x15220b.data.openTime / 1000) +
-              'Ãë'
+              'ç§’'
           ),
           _0x15220b.data.openTime == 0 &&
             (await $.wait(200), await this.openBox(true)))
-        : console.log('??' + this.name + '=>¿ª±¦Ïä´ÎÊıÒÑÓÃÍê')
+        : console.log('??' + this.name + '=>å¼€å®ç®±æ¬¡æ•°å·²ç”¨å®Œ')
       : _0x412555 == true
-      ? console.log('??' + this.name + '=>¿ª±¦ÏäÊ§°Ü£º' + _0x15220b.error_msg)
+      ? console.log('??' + this.name + '=>å¼€å®ç®±å¤±è´¥ï¼š' + _0x15220b.error_msg)
       : console.log(
-          '??' + this.name + '=>²éÑ¯±¦Ïä×´Ì¬Ê§°Ü£º' + _0x15220b.error_msg
+          '??' + this.name + '=>æŸ¥è¯¢å®ç®±çŠ¶æ€å¤±è´¥ï¼š' + _0x15220b.error_msg
         );
   } */
 
@@ -230,7 +230,7 @@ class ksUser {
 
 
 
-  //¶Ò»»
+  //å…‘æ¢
   async changeExchangeType(_0x1bd22f) {
     let _0x4e7ea7 =
         'https://nebula.kuaishou.com/rest/n/nebula/exchange/changeExchangeType',
@@ -245,17 +245,17 @@ class ksUser {
       return;
     }
 
-    let _0x1fdd87 = _0x1bd22f == 0 ? '×Ô¶¯¶Ò»»' : 'ÊÖ¶¯¶Ò»»';
+    let _0x1fdd87 = _0x1bd22f == 0 ? 'è‡ªåŠ¨å…‘æ¢' : 'æ‰‹åŠ¨å…‘æ¢';
 
     _0x4df55c.result == 1
       ? console.log(
           '??' +
             this.name +
-            '=>¶Ò»»·½Ê½¸ü¸Ä³É¹¦£¬Ä¿Ç°¶Ò»»·½Ê½Îª£º' +
+            '=>å…‘æ¢æ–¹å¼æ›´æ”¹æˆåŠŸï¼Œç›®å‰å…‘æ¢æ–¹å¼ä¸ºï¼š' +
             _0x1fdd87
         )
       : console.log(
-          '??' + this.name + '=>¶Ò»»·½Ê½¸ü¸ÄÊ§°Ü£º' + _0x4df55c.error_msg
+          '??' + this.name + '=>å…‘æ¢æ–¹å¼æ›´æ”¹å¤±è´¥ï¼š' + _0x4df55c.error_msg
         );
   }
 
@@ -263,10 +263,10 @@ class ksUser {
 
 
 
-  //½ğ±Ò¶Ò»»½±È¯
+  //é‡‘å¸å…‘æ¢å¥–åˆ¸
   async exchangeCoin() {
     if (this.coinBalance < 100) {
-      console.log('??' + this.name + '=>½ğ±ÒÓà¶î²»×ã100£¬²»Ö´ĞĞ¶Ò»»');
+      console.log('??' + this.name + '=>é‡‘å¸ä½™é¢ä¸è¶³100ï¼Œä¸æ‰§è¡Œå…‘æ¢');
       return;
     }
 
@@ -293,21 +293,21 @@ class ksUser {
       console.log(
         '??' +
           this.name +
-          '=>¶Ò»»½ğ±Ò³É¹¦£¬½«' +
+          '=>å…‘æ¢é‡‘å¸æˆåŠŸï¼Œå°†' +
           _0x1e5bfa +
-          '½ğ±Ò¶Ò»»³É' +
+          'é‡‘å¸å…‘æ¢æˆ' +
           _0xd2629a +
-          'Ôª'
+          'å…ƒ'
       );
     } else {
       console.log(
-        '??' + this.name + '=>¶Ò»»½ğ±ÒÊ§°Ü£º' + _0x2ae7ad.error_msg
+        '??' + this.name + '=>å…‘æ¢é‡‘å¸å¤±è´¥ï¼š' + _0x2ae7ad.error_msg
       );
     }
   }
 
 
-  //»ñÈ¡ÓÃ»§ID
+  //è·å–ç”¨æˆ·ID
   async getUserid() {
     let _0x579d90 =
         'https://nebula.kuaishou.com/rest/n/nebula/activity/invitation/relationLink?version=1.2.0',
@@ -324,7 +324,7 @@ class ksUser {
     _0x450eae.result == 1
       ? (this.userId = _0x450eae.data.userId)
       : console.log(
-          '??' + this.name + '=>»ñÈ¡userIdÊ§°Ü£º' + _0x450eae.error_msg
+          '??' + this.name + '=>è·å–userIdå¤±è´¥ï¼š' + _0x450eae.error_msg
         );
   }
 
@@ -333,7 +333,7 @@ class ksUser {
   
 
 
-  //ÕËºÅÏêÇé
+  //è´¦å·è¯¦æƒ…
   async accountInfo() {
     let _0x308f69 =
         'https://www.kuaishoupay.com/pay/account/h5/withdraw/account_info',
@@ -350,7 +350,7 @@ class ksUser {
     _0x25e462.result == 'SUCCESS'
       ? (this.needSms = _0x25e462.need_mobile_code)
       : console.log(
-          '??' + this.name + '=>²éÑ¯ÕËºÅÌáÏÖÇé¿öÊ§°Ü£º' + _0x25e462.error_msg
+          '??' + this.name + '=>æŸ¥è¯¢è´¦å·æç°æƒ…å†µå¤±è´¥ï¼š' + _0x25e462.error_msg
         );
   }
 }
@@ -358,12 +358,12 @@ class ksUser {
 
 
 
-//Ö´ĞĞÈÎÎñ£¬Ç°ÃæµÄasyncÊÇÒì²½£¬ÏÖÔÚ´¦Àí
+//æ‰§è¡Œä»»åŠ¡ï¼Œå‰é¢çš„asyncæ˜¯å¼‚æ­¥ï¼Œç°åœ¨å¤„ç†
 !(async () => {
   if (!(await formatCookie())) {
     return;
   }
-  console.log('\n============== ??µÇÂ¼?? ==============');
+  console.log('\n============== ??ç™»å½•?? ==============');
   for (let user of Users) {
      await user.getUserInfo();
      await $.wait(500);
@@ -380,7 +380,7 @@ class ksUser {
     await $.wait(200);
     //await u.openBox(false);
   }
-  console.log('\n============== ??ÕË»§Çé¿ö?? ==============');
+  console.log('\n============== ??è´¦æˆ·æƒ…å†µ?? ==============');
   for (let u of CurrentUser) {
     await u.accountOverview();
     await $.wait(200);
@@ -400,10 +400,10 @@ async function formatCookie() {
     }
     count = Users.length;
   } else {
-    console.log('Î´ÕÒµ½CK');
+    console.log('æœªæ‰¾åˆ°CK');
     return;
   }
-  console.log('¹²ÕÒµ½' + count + '¸öÕËºÅ');
+  console.log('å…±æ‰¾åˆ°' + count + 'ä¸ªè´¦å·');
   return true;
 }
 function getOptions(url, cookie, body = '') {
@@ -420,7 +420,7 @@ function getOptions(url, cookie, body = '') {
   return options;
 }
 
-  //httpÇëÇó
+  //httpè¯·æ±‚
 
 async function doRequest(method, options) {
   res = null;
@@ -428,7 +428,7 @@ async function doRequest(method, options) {
     $[method](options, async (err, resp, data) => {
       try {
         if (err) {
-          console.log(method + 'ÇëÇóÊ§°Ü');
+          console.log(method + 'è¯·æ±‚å¤±è´¥');
           console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
@@ -445,7 +445,7 @@ async function doRequest(method, options) {
   });
 }
 
-  //°²È«»ñÈ¡Êı¾İ
+  //å®‰å…¨è·å–æ•°æ®
 function safeGet(data) {
   try {
     if (typeof JSON.parse(data) == 'object') {
@@ -453,7 +453,7 @@ function safeGet(data) {
     }
   } catch (e) {
     console.log(e);
-    console.log(`·şÎñÆ÷·ÃÎÊÊı¾İÎª¿Õ£¬Çë¼ì²é×ÔÉíÉè±¸ÍøÂçÇé¿ö`);
+    console.log(`æœåŠ¡å™¨è®¿é—®æ•°æ®ä¸ºç©ºï¼Œè¯·æ£€æŸ¥è‡ªèº«è®¾å¤‡ç½‘ç»œæƒ…å†µ`);
     return false;
   }
 }
@@ -525,7 +525,7 @@ var Base64 = {
 
 
 
-//ÇàÁúµÈÄ£¿é
+//é’é¾™ç­‰æ¨¡å—
 function Env(t, e) {
   class s {
     constructor(t) {
